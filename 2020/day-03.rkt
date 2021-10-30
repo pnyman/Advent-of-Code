@@ -23,6 +23,7 @@
       (set! ctr (add1 ctr)))
     (advance pos 3 1 cols))
   ctr)
+;; 209
 
 
 (let* ([input (file->lines "day-03-input.txt")]
@@ -39,3 +40,4 @@
         (advance pos (first c) (second c) cols))
       (set! total (* total ctr))))
   total)
+;; 1574890240

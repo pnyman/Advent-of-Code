@@ -25,6 +25,7 @@ LOOP: for my $p (@passports) {
     $valid++;
 }
 say $valid;
+# 233
 
 ## part 2
 
@@ -49,3 +50,4 @@ LOOP: for my $p (@passports) {
     $valid++;
 }
 say $valid;
+# 111
