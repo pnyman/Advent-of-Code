@@ -3,7 +3,7 @@ use warnings;
 use v5.12;
 use Path::Tiny;
 
-my @foo  = split /\n/, path('day-03-input.txt')->slurp;
+my @foo  = split /\n/, path('input', 'day-03-input.txt')->slurp;
 my $cols = length $foo[0];
 my %pos  = ( x => 0, y => 0 );
 

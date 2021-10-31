@@ -3,7 +3,7 @@ use warnings;
 use v5.12;
 
 $/ = '';
-open my $fh, '<', 'day-06-input.txt';
+open my $fh, '<', 'input/day-06-input.txt';
 my ( $answer1, $answer2 ) = ( 0, 0 );
 
 for (<$fh>) {

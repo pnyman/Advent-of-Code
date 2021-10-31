@@ -5,7 +5,7 @@ use Path::Tiny;
 use DDP;
 
 $/ = '';
-open my $fh, '<', 'day-04-input.txt';
+open my $fh, '<', 'input/day-04-input.txt';
 
 my @passports;
 for (<$fh>) {

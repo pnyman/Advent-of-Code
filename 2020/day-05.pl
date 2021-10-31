@@ -4,7 +4,7 @@ use v5.12;
 use Path::Tiny;
 use DDP;
 
-my @foo = split /\n/, path('day-05-input.txt')->slurp;
+my @foo = split /\n/, path('input', 'day-05-input.txt')->slurp;
 my @ids;
 
 for my $f (@foo) {

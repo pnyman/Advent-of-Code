@@ -3,7 +3,7 @@ use warnings;
 use v5.12;
 use Path::Tiny;
 
-my @foo = split /\n/, path('day-02-input.txt')->slurp;
+my @foo = split /\n/, path('input', 'day-02-input.txt')->slurp;
 
 # part 1
 my $ctr = 0;
