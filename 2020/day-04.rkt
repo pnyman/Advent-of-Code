@@ -4,14 +4,14 @@
   (string-split (file->string "input/day-04-input.txt") #px"\r\n\r\n"))
 
 (define passports
-  (for/fold ([ppts '()])
+  (for/fold ([acc '()])
             ([line input])
-      (let ([ht (make-hash)])
-        (for ([entry (string-split line)])
-          (match-define (list key val)
-            (string-split entry ":"))
-          (hash-set! ht key val))
-        (append ppts (list ht)))))
+    (cons (for/fold ([ht (hash)])
+                    ([entry (string-split line)])
+            (match-define (list key val)
+              (string-split entry ":"))
+            (hash-set ht key val))
+          acc)))
 
 (define (valid1? passport)
   (for/and ([key '("byr" "ecl" "eyr" "hcl" "hgt" "iyr" "pid")])
