@@ -2,33 +2,20 @@ use strict;
 use warnings;
 use v5.12;
 use Path::Tiny;
-use DDP;
+use List::Util 'max';
 
-my @foo = split /\n/, path('input', 'day-05-input.txt')->slurp;
-my @ids;
+my %seats;
+$seats{ find_seat($_) }++
+  for split /\n/, path('input/day-05-input.txt')->slurp;
+my $max_id = max keys %seats;
 
-for my $f (@foo) {
-    my @rows = 0 .. 127;
-    for ( 0 .. 6 ) {
-        my $half = int( @rows / 2 );
-        @rows
-          = substr( $f, $_, 1 ) eq 'F'
-          ? @rows[ 0 .. $half - 1 ]
-          : @rows[ $half .. $#rows ];
-    }
+say $max_id;
+!exists $seats{$_} and say and last for reverse 0 .. $max_id;
 
-    my @seats = 0 .. 7;
-    for ( 7 .. 9 ) {
-        my $half = int( @seats / 2 );
-        @seats
-          = substr( $f, $_, 1 ) eq 'L'
-          ? @seats[ 0 .. $half - 1 ]
-          : @seats[ $half .. $#seats ];
-    }
-
-    push @ids, $rows[0] * 8 + $seats[0];
+sub find_seat {
+    oct '0b' . join '', map { to_bit($_) } split //;
 }
 
-@ids = sort { $a <=> $b } @ids;
-say $ids[-1];
-$ids[ $_ + 1 ] - $ids[$_] == 2 and say $ids[$_] + 1 for 0 .. $#ids - 1;
+sub to_bit {
+    { F => 0, B => 1, L => 0, R => 1 }->{ $_[0] };
+}
