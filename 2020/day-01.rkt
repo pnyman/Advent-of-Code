@@ -1,21 +1,16 @@
 #lang racket
 
-(let* ([input (file->lines "day-01-input.txt")]
-       [len (length input)])
-  ;; part 1
-  (for*/first ([i (in-range (- len 1))]
-               [j (in-range (+ i 1) len)]
-               #:when (= 2020 (+ (string->number (list-ref input i))
-                                 (string->number (list-ref input j)))))
-    (println (* (string->number (list-ref input i))
-                (string->number (list-ref input j)))))
-  ;; part 2
-  (for*/first ([i (in-range (- len 2))]
-               [j (in-range (+ i 1) (- len 1))]
-               [k (in-range (+ j 1) len)]
-               #:when (= 2020 (+ (string->number (list-ref input i))
-                                 (string->number (list-ref input j))
-                                 (string->number (list-ref input k)))))
-        (println (* (string->number (list-ref input i))
-                    (string->number (list-ref input j))
-                    (string->number (list-ref input k))))))
+(define nums (map string->number (file->lines "input/day-01-input.txt")))
+
+(for*/first ((i nums)
+             (j nums)
+             #:when (= 2020 (+ i j)))
+  (* i j))
+;; 927684
+
+(for*/first ((i nums)
+             (j nums)
+             (k nums)
+             #:when (= 2020 (+ i j k)))
+  (* i j k))
+;; 292093004
