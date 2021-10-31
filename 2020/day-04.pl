@@ -34,17 +34,16 @@ LOOP: for my $p (@passports) {
     exists $p->{$_} or next LOOP for qw(byr ecl eyr hcl hgt iyr pid);
 
     next LOOP
-      unless ( $p->{byr} =~ /\d{4}/ && 1920 <= $p->{byr} <= 2002 )
-      && ( $p->{iyr} =~ /\d{4}/ && 2010 <= $p->{iyr} <= 2020 )
-      && ( $p->{eyr} =~ /\d{4}/ && 2020 <= $p->{eyr} <= 2030 )
-      && ( $p->{hcl} =~ /^#[0-9a-f]{6}$/ )
+      unless ( 1920 <= $p->{byr} <= 2002 )
+      && ( 2010 <= $p->{iyr} <= 2020 )
+      && ( 2020 <= $p->{eyr} <= 2030 )
       && ( $p->{ecl} =~ /^amb|blu|brn|gry|grn|hzl|oth$/ )
+      && ( $p->{hcl} =~ /^#[0-9a-f]{6}$/ )
       && ( $p->{pid} =~ /^[0-9]{9}$/ );
 
     my ( $val, $unit ) = $p->{hgt} =~ /^(\d+)(cm|in)$/;
     next LOOP
       unless ( $val && $unit )
-      && ( $unit =~ /^cm|in$/ )
       && ( $unit eq 'cm' ? 150 <= $val <= 193 : 59 <= $val <= 76 );
 
     $valid++;

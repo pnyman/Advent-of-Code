@@ -1,43 +1,32 @@
 #lang racket
 
-(struct position (x y) #:mutable)
+(define input (file->lines "input/day-03-input.txt"))
 
-(define (advance pos dx dy cols)
-  (set-position-x! pos (modulo (+ (position-x pos) dx) cols))
-  (set-position-y! pos (+ (position-y pos) dy)))
+(define (rows down)
+  (for/list ((line input)
+             (row (in-naturals))
+             #:when (zero? (modulo row down)))
+    (string->list line)))
 
-(define (tree? input pos)
-  (equal? "#"
-          (substring (list-ref input (position-y pos))
-                     (position-x pos)
-                     (add1 (position-x pos)))))
+(define (trees right (down 1))
+  (for/fold ((acc 0))
+            ((row (rows down))
+             (col (in-range 0 +inf.0 right)))
+    (if (equal? #\# (list-ref row (modulo col (length row))))
+        (add1 acc)
+        acc)))
 
-(let* ([input (file->lines "day-03-input.txt")]
-       [rows (length input)]
-       [cols (string-length (list-ref input 0))]
-       [pos (position 0 0)]
-       [ctr 0])
-  (for ([_ input]
-        #:break (> (position-y pos) rows))
-    (when (tree? input pos)
-      (set! ctr (add1 ctr)))
-    (advance pos 3 1 cols))
-  ctr)
+;; (define (trees right (down 1))
+;;   (for/fold ((acc 0)
+;;              (col 0)
+;;              #:result acc)
+;;             ((row (rows down)))
+;;     (if (equal? #\# (list-ref row (modulo col (length row))))
+;;         (values (add1 acc) (+ col right))
+;;         (values acc (+ col right)))))
+
+(trees 3)
 ;; 209
 
-
-(let* ([input (file->lines "day-03-input.txt")]
-       [rows (length input)]
-       [cols (string-length (list-ref input 0))]
-       [total 1])
-  (for ([c '((1 1) (3 1) (5 1) (7 1) (1 2))])
-    (let ([pos (position 0 0)]
-          [ctr 0])
-      (for ([_ input]
-            #:break (> (position-y pos) rows))
-        (when (tree? input pos)
-          (set! ctr (add1 ctr)))
-        (advance pos (first c) (second c) cols))
-      (set! total (* total ctr))))
-  total)
+(* (trees 1) (trees 3) (trees 5) (trees 7) (trees 1 2))
 ;; 1574890240
