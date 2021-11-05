@@ -17,10 +17,8 @@ sub make_value {
     my $val = shift;
     my @result;
     for my $bag ( split /,/, $val ) {
-        my $n = 0;
         $bag =~ s/(\d+)//;
-        $n = $1;
-        push @result, { amount => $n, content => make_key($bag) };
+        push @result, { amount => $1, content => make_key($bag) };
     }
     \@result;
 }
