@@ -22,8 +22,7 @@ sub part1 {
         my @mask   = split //,   shift @record;
 
         for (@record) {
-            /^mem\[(\d+)\]\s*=\s*(\d+)/;
-            my ( $pos, $val ) = ( $1, $2 );
+            my ( $pos, $val ) = /^mem\[(\d+)\]\s*=\s*(\d+)/;
             my @bin = split //, sprintf "%036b", $val;
 
             for my $i ( reverse 0 .. $#mask ) {
@@ -46,14 +45,13 @@ sub part2 {
         my @mask   = split //,   shift @record;
 
         for (@record) {
-            /^mem\[(\d+)\]\s*=\s*(\d+)/;
-            my ( $pos, $val ) = ( $1, $2 );
+            my ( $pos, $val ) = /^mem\[(\d+)\]\s*=\s*(\d+)/;
             my @bin = split //, sprintf "%036b", $pos;
             my @xs  = ();
 
             for my $i ( reverse 0 .. $#mask ) {
                 next         if $mask[$i] eq '0';
-                $bin[$i] = 1 if $mask[$i] == 1;
+                $bin[$i] = 1 if $mask[$i] eq '1';
                 push @xs, $i if $mask[$i] eq 'X';
             }
 
