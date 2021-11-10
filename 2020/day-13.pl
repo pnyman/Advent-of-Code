@@ -6,10 +6,10 @@ use Path::Tiny;
 use List::Util 'min';
 use DDP;
 
-*STDIN = *DATA;
-my @input = (<STDIN>);
+# *STDIN = *DATA;
+# my @input = (<STDIN>);
 
-# my @input = split /\n/, path('input/day-13-example.txt')->slurp;
+my @input = split /\n/, path('input/day-13-input.txt')->slurp;
 
 sub part1 {
     my $timestamp = $input[0];
@@ -41,7 +41,6 @@ sub part2x {
     my @ids = split /,/, $input[1];
     my @foo = map { [ $_, $ids[$_] ] } grep { $ids[$_] ne 'x' } 0 .. $#ids;
 
-    my $step = $foo[0]->[1];
     my $x = 0;
     # my $x = 1_068_773;
     # my $x = 100_000_000_000_003;
@@ -49,7 +48,7 @@ sub part2x {
     LOOP: while (1) {
         for (@foo) {
             if ( ( $x + @$_[0] ) % @$_[1] ) {
-                $x += $step;
+                ++$x;
                 next LOOP;
             }
         }
