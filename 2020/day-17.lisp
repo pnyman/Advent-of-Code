@@ -3,9 +3,9 @@
 (defun input ()
   (let ((initial-state '()))
     (loop for line in (uiop:read-file-lines "input/day-17-input.txt")
-          for x below 8
+          for x from 0
           do (loop for c across line
-                   for y below 8
+                   for y from 0
                    when (char= c #\#)
                      do (push (list x y 0) initial-state)))
     initial-state))
@@ -58,9 +58,9 @@
 (defun input-2 ()
   (let ((initial-state '()))
     (loop for line in (uiop:read-file-lines "input/day-17-input.txt")
-          for x below 8
+          for x from 0
           do (loop for c across line
-                   for y below 8
+                   for y from 0
                    when (char= c #\#)
                      do (push (list x y 0 0) initial-state)))
     initial-state))
@@ -72,6 +72,9 @@
       (push (1+ (reduce #'max (mapcar (lambda (x) (nth i x)) cubes))) result))
     (reverse result)))
 
+;; seconds  |     gc     |    consed   |  calls  |  sec/call  |  name
+;; -----------------------------------------------------------
+;;  127.745 |      0.063 | 542,056,128 | 105,882 |   0.001206 | COUNT-ACTIVE-NEIGHBOURS-2
 (defun count-active-neighbours-2 (cubes x y z w)
   (let ((active 0))
     (loop for dx from -1 to 1 do
