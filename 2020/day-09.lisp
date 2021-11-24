@@ -1,8 +1,7 @@
 (ql:quickload "uiop")
 
 (defparameter input
-  (loop for s in (uiop:read-file-lines "input/day-09-input.txt")
-        collect (parse-integer s)))
+  (mapcar #'parse-integer (uiop:read-file-lines "input/day-09-input.txt")))
 
 (defparameter preamble 25)
 

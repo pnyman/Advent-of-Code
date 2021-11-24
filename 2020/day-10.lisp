@@ -1,10 +1,9 @@
 (ql:quickload "uiop")
 
-(defparameter input
-  (loop for s in (uiop:read-file-lines "input/day-10-input.txt")
-        collect (parse-integer s)))
+(defun input ()
+  (mapcar #'parse-integer (uiop:read-file-lines "input/day-10-input.txt")))
 
-(defun part-1 ()
+(defun part-1 (input)
   (let ((jolt 0) (diff-1 0) (diff-3 1))
     (loop while (< jolt (reduce #'max input))
           do (loop for x from (+ jolt 1) to (+ jolt 3)
@@ -15,7 +14,7 @@
                         (return)))
     (* diff-1 diff-3)))
 
-(defun part-2 ()
+(defun part-2 (input)
   (let ((run 1)
         (arrangements 1)
         (sorted (concatenate 'list '(0)
@@ -29,3 +28,6 @@
                                  (case run (5 7) (4 4) (3 2) (otherwise 1))))
                         (setf run 1))))
     arrangements))
+
+(print (part-1 (input))) ;; 2475
+(print (part-2 (input))) ;; 442136281481216
