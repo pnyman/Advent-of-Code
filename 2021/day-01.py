@@ -5,3 +5,9 @@ def solve(nums, skip):
 
 print(solve(nums, 1))
 print(solve(nums, 3))
+
+def solve_alt(nums, window):
+    return sum(a < b for a, b in zip(nums, nums[window:]))
+
+print(solve_alt(nums, 1))
+print(solve_alt(nums, 3))

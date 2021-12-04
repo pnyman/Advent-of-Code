@@ -4,12 +4,19 @@
     (loop for elt in (split-string (buffer-string) "\n" t)
           collect (string-to-number elt))))
 
-(defun solve (input skip)
+(defun solve (input window)
   (length
-   (loop for i below (- (length input) skip)
+   (loop for i below (- (length input) window)
          when (< (nth i input)
-                 (nth (+ i skip) input))
+                 (nth (+ i window) input))
          collect i)))
+
+
+(defun solve (input window)
+  (loop for i below (- (length input) window)
+        count (< (nth i input)
+                 (nth (+ i window) input))))
+
 
 (solve (input) 1) ; 1711
 (solve (input) 3) ; 1743

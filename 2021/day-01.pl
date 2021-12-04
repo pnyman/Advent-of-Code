@@ -1,8 +1,14 @@
 use strict;
 use warnings;
-use Path::Tiny;
 use v5.30;
+use Path::Tiny;
 
 my @input = split /\n/, path('input/day-01-input.txt')->slurp;
-say scalar grep { $input[$_] < $input[ $_ + 1 ] } 0 .. @input - 2;
-say scalar grep { $input[$_] < $input[ $_ + 3 ] } 0 .. @input - 4;
+
+sub solve {
+    my ( $input, $window ) = @_;
+    scalar grep { @$input[$_] < @$input[ $_ + $window ] } 0 .. $#$input - $window;
+}
+
+say solve \@input, 1;
+say solve \@input, 3;
