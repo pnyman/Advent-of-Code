@@ -21,30 +21,14 @@ def mark_boards(number):
 def check_boards():
     winners = []
     for board in BOARDS:
-        for row in board:
-            marked = 0
-            for square in row:
-                if square[1]:
-                    marked += 1
-            if marked == 5:
-                winners.append(board)
-        for col in zip(*board):
-            marked = 0
-            for square in col:
-                if square[1]:
-                    marked += 1
-            if marked == 5:
+        for row in board + list(zip(*board)):
+            if sum(square[1] for square in row) == 5:
                 winners.append(board)
     return winners
 
 
 def compute_result(number, board):
-    score = 0
-    for row in board:
-        for square in row:
-            if not square[1]:
-                score += square[0]
-    return number * score
+    return number * sum([sum(s[0] for s in row if not s[1]) for row in board])
 
 
 def part1():
@@ -66,11 +50,9 @@ def part2():
     last_winner = []
     for number in NUMBERS:
         mark_boards(number)
-        winners = check_boards()
-        if winners:
-            for winner in winners:
-                remove_board(winner)
-            last_winner = [number, winners[-1]]
+        for winner in check_boards():
+            remove_board(winner)
+            last_winner = [number, winner]
     return compute_result(last_winner[0], last_winner[1])
 
 
