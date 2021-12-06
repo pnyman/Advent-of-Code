@@ -19,8 +19,12 @@ def result(i, board, wins):
 
 
 def bingo(numbers, boards, n):
-    rows, cols = [[0]*n for i in boards], [[0]*n for i in boards]
-    wins, banned_boards = [0 for i in boards], [0 for i in boards]
+    # rows, cols = [[0]*n for i in boards], [[0]*n for i in boards]
+    rows = [[0]*n for i in boards]
+    cols = rows.copy()
+    # wins, banned_boards = [0 for i in boards], [0 for i in boards]
+    wins = [0 for i in boards]
+    banned_boards = wins.copy()
     n_boards = len(boards)
 
     for i in numbers:
