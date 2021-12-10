@@ -1,73 +1,53 @@
-input = [[x.split(), y.split()] for (x, y) in
+input = [[line.split(), y.split()] for (line, y) in
          [line.strip().split('|')
-          for line in open('input/day-08-example.txt')]]
-
-# print(input)
-
-numbers = { 0: 6, 1: 2, 3: 5, 4: 4, 5: 5, 6: 6, 7: 3, 8: 7, 9: 6 }
-segments = { 2: 1, 3: 7, 4: 4, 5: [2, 3, 5], 6: [0, 6, 9], 7: 8 }
-
-digits_map = {
-    'abcefg': '0',
-    'cf': '1',
-    'acdeg': '2',
-    'acdfg': '3',
-    'bcdf': '4',
-    'abdfg': '5',
-    'abdefg': '6',
-    'acf': '7',
-    'abcdefg': '8',
-    'abcdfg': '9'
-}
-
-# cfbegad
-
-def make_translation_key(lst):
-    lst.sort(key=len)
-
-    ## segmentet för a finns i 7 men inte 1
-    a = list(set(lst[1]).difference(lst[0]))[0]
-    ## segmenten för b och d finns i 4 men inte i 1
-    bd = list(set(lst[2]).difference(lst[0]))
-    ## segmenten för c och f finns i 1
-    cf = list(lst[0])
-    ## segmenten för e och g finns bara i 8
-    eg = list(set(lst[3]).difference(lst[1]).difference(lst[2]).difference(lst[0]))
-
-
-
-    key = {a[0]: 'a', a[1]: 'b', a[2]: 'c',
-           a[3]: 'd', a[4]: 'e', a[5]: 'f', a[6]: 'g'}
-    return key
-
-def translate(key, digits):
-    print(key)
-    result = ''
-    for digit in digits:
-        temp = ''
-        print(digit)
-        for char in digit:
-            temp += key[char]
-            print(temp)
-        result += digits_map[temp]
-    return int(result)
+          for line in open('input/day-08-input.txt')]]
 
 lengths = [0]*10
-for x in input:
-    for y in x[1]:
+for line in input:
+    for y in line[1]:
         lengths[len(y)] += 1
 
 result = lengths[2] + lengths[3] + lengths[4] + lengths[7]
 print(result)
 
+#==== Part 2 ===============
+
+def make_translation_key(pattern):
+    tmp = {}
+    for p in pattern:
+        le = len(p)
+        if le == 2: tmp[1] = p
+        elif le == 4: tmp[4] = p
+        elif le == 3: tmp[7] = p
+        elif le == 7: tmp[8] = p
+
+    for p in pattern:
+        if len(p) != 6: continue
+        if set(tmp[4]).issubset(set(p)): tmp[9] = p
+        elif set(tmp[1]).issubset(set(p)): tmp[0] = p
+        else: tmp[6] = p
+
+    e = list(set(tmp[8]).difference(tmp[9]))
+    for p in pattern:
+        if len(p) != 5: continue
+        if set(tmp[1]).issubset(set(p)): tmp[3] = p
+        elif set(e).issubset(set(p)): tmp[2] = p
+        else: tmp[5] = p
+
+    key = {}
+    for k, v in tmp.items():
+        key[''.join((sorted(list(v))))] = k
+
+    return key
+
+def translate(key, value):
+    result = ''
+    for v in value:
+        result += str(key[''.join((sorted(list(v))))])
+    return int(result)
 
 values = []
-for x in input:
-    onefourseveneight = []
-    for y in x[0]:
-        if 2 <= len(y) <= 4 or len(y) == 7:
-            onefourseveneight.append(y)
-        key = make_translation_key(onefourseveneight)
-    values.append(translate(key, x[0]))
-
+for pattern, value in input:
+    key = make_translation_key(pattern)
+    values.append(translate(key, value))
 print(sum(values))
