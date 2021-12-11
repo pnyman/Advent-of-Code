@@ -26,33 +26,29 @@ remaining_points = []
 for r, row in enumerate(input):
     tmp = []
     for c, col in enumerate(row):
-        remaining_points.append((r,c))
+        if col != 9: remaining_points.append((r,c))
         tmp.append(0 if col == 9 else 1)
     matrix.append(tmp)
 
 basins = []
-while len(remaining_points) > 0:
+while remaining_points:
     basin = []
     grid = Grid(matrix=matrix)
     start = (remaining_points[0][0], remaining_points[0][1])
-    if matrix[start[0]][start[1]] == 0:
-        remaining_points = remaining_points[1:]
-        continue
     basin.append(start)
     start = grid.node(start[1], start[0])
     for p in remaining_points[1:]:
-        if matrix[p[0]][p[1]] == 0: continue
         grid = Grid(matrix=matrix)
         end = grid.node(p[1], p[0])
         finder = AStarFinder()
         path, runs = finder.find_path(start, end, grid)
-        if len(path) > 0:
-            basin.append(p)
+        if len(path) > 0: basin.append(p)
     remaining_points = [x for x in remaining_points if not x in basin]
     basins.append(basin)
 
 basins.sort(key=len, reverse=True)
 print(len(basins[0]) * len(basins[1]) * len(basin[2])) # 1235430
+# print(len(basins[0]) * len(basins[1])) # 1235430
 
 # började 23:31
 # färdig 03:16
