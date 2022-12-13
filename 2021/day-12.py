@@ -1,5 +1,6 @@
 data = [line.split('-') for line in
-        [line.strip() for line in open('input/day-12-example-1.txt')]]
+        [line.strip() for line in
+         open('input/day-12-example-1.txt')]]
 
 graph = {}
 for k,v in data:
@@ -10,62 +11,63 @@ for k,v in data:
     graph[k].append(v)
     graph[v].append(k)
 
+#==== Part 1 ==================================
+
 class Graph:
     def __init__(self, graph):
-        self.adj = graph
-        self.pathCount = 0
+        self.graph = graph
+        self.path_count = 0
 
-    def countPaths(self, s, d):
-        # Mark all the vertices as not visited
-        visited = {key: False for key in self.adj}
-        self.countPathsUtil(s, d, visited)
-        return self.pathCount
+    def count_paths(self, start, end):
+        visited = {key: False for key in self.graph}
+        self.count_paths_util(start, end, visited)
+        return self.path_count
 
-    def countPathsUtil(self, u, d, visited):
+    def count_paths_util(self, u, end, visited):
         if not u.isupper():
             visited[u] = True
-        # If current vertex is the destination, increment count
-        if (u == d):
-            self.pathCount += 1
+        if (u == end):
+            self.path_count += 1
         else:
-            for v in self.adj[u]:
+            for v in self.graph[u]:
                 if not visited[v]:
-                    self.countPathsUtil(v, d, visited)
+                    self.count_paths_util(v, end, visited)
         visited[u] = False
 
 
 g = Graph(graph)
-print(g.countPaths('start', 'end')) # 5157
+print(g.count_paths('start', 'end')) # 5157
 
+#==== Part 2 ==================================
 
 class Graph2:
     def __init__(self, graph):
-        self.adj = graph
-        self.pathCount = 0
+        self.graph = graph
+        self.path_count = 0
 
-    def countPaths(self, s, d):
-        for u in self.adj:
-            if u == s or u == d or u.isupper():
+    def count_paths(self, start, end):
+        for u in self.graph:
+            if u == start or u == end or u.isupper():
                 continue
             visit_twice= {u: 2}
-            visited = {key: False for key in self.adj}
-            self.countPathsUtil(s, d, visited, visit_twice)
-        return self.pathCount
+            visited = {key: False for key in self.graph}
+            self.count_paths_util(start, end, visited, visit_twice)
+        return self.path_count
 
-    def countPathsUtil(self, u, d, visited, visit_twice):
+    def count_paths_util(self, u, end, visited, visit_twice):
         if not u.isupper():
             visited[u] = True
         if u in visit_twice:
             visit_twice[u] -= 1
         # If current vertex is the destination, increment count
-        if (u == d):
-            self.pathCount += 1
+        if (u == end):
+            self.path_count += 1
         else:
-            for v in self.adj[u]:
+            for v in self.graph[u]:
                 if not visited[v] or (v in visit_twice and visit_twice[v] > 0):
-                    self.countPathsUtil(v, d, visited, visit_twice)
+                    self.count_paths_util(v, end, visited, visit_twice)
         visited[u] = False
 
 
 g = Graph2(graph)
-print(g.countPaths('start', 'end'))
+print(g.count_paths('start', 'end'))
