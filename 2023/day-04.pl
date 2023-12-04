@@ -19,7 +19,7 @@ for ( map { ( split /:/ )[1] } @input ) {
 }
 
 sub solve_01 {
-    sum map { int 2**( -1 + $cards{$_}{wins} ) } keys %cards;
+    sum map { int 2**( -1 + $_->{wins} ) } values %cards;
 }
 
 sub solve_02 {
