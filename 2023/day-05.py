@@ -6,8 +6,8 @@ def solve_01():
     seeds = [int(x) for x in data[0].split(':')[1].strip().split(' ')]
 
     maps = []
-    for i, line in enumerate(data[2:]): # if empty line or end
-        if line == '' or i == len(data) - 3:
+    for i, line in enumerate(data[2:]):
+        if line == '' or i == len(data) - 3: # if empty line or end
             for j, seed in enumerate(seeds):
                 seeds[j] = update_seed(seed, maps)
             maps.clear()
