@@ -6,7 +6,7 @@ def solve_01():
     seeds = [int(x) for x in data[0].split(':')[1].strip().split(' ')]
 
     maps = []
-    for i, line in enumerate(data[2:]):
+    for i, line in enumerate(data[2:]): # if empty line or end
         if line == '' or i == len(data) - 3:
             for j, seed in enumerate(seeds):
                 seeds[j] = update_seed(seed, maps)
@@ -22,7 +22,7 @@ def solve_01():
 def update_seed(seed, maps):
     for m in maps:
         if m[1] <= seed <= m[1] + m[2] - 1:
-            return m[0] + seed - m[1]
+            return m[0] - m[1] + seed
     return seed
             
 
