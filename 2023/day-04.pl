@@ -34,4 +34,4 @@ sub solve_02 {
 say solve_01;
 say solve_02;
 
-printf("Execution Time: %0.04f s\n", time() - $start);
+printf( "Execution Time: %0.04f s\n", time() - $start );
