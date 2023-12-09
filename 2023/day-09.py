@@ -7,7 +7,7 @@ def get_data():
     return data
 
 
-def get_next_value_01(history, part):
+def get_next_value(history, part):
     sequences = [history]
 
     while not all(n == 0 for n in sequences[-1]):
@@ -30,11 +30,11 @@ def get_next_value_01(history, part):
 def solve():
     values_01 = []
     for history in get_data():
-        values_01.append(get_next_value_01(history, 1))
+        values_01.append(get_next_value(history, 1))
 
     values_02 = []
     for history in get_data():
-        values_02.append(get_next_value_01(history, 2))
+        values_02.append(get_next_value(history, 2))
 
     return sum(values_01), sum(values_02)
 
