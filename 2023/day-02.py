@@ -23,18 +23,18 @@ def get_data():
 def solve_01():
     games = get_data()
     bag = {'red': 12, 'green': 13, 'blue': 14}
-    possible = []
+    result = 0
 
     for game_number in games:
         include = True
         for reveal in games[game_number]:
-            for colour in bag.keys():
+            for colour in bag:
                 if reveal[colour] > bag[colour]:
                     include = False
         if include:
-            possible.append(game_number)
+            result += game_number
 
-    return sum(possible)
+    return result
 
 
 def solve_02():
@@ -44,7 +44,7 @@ def solve_02():
     for game_number in games:
         bag = {'red': 0, 'green': 0, 'blue': 0}
         for reveal in games[game_number]:
-            for colour in bag.keys():
+            for colour in bag:
                 bag[colour] = max([reveal[colour], bag[colour]])
         result += math.prod(bag.values())
 
