@@ -1,32 +1,50 @@
 import os
 
-def solve_01():
-    input_file = os.path.join(os.path.dirname(__file__), "input/day-05-input.txt")
-    data = [line.strip() for line in open(input_file, "r")]
-    seeds = [int(x) for x in data[0].split(':')[1].strip().split(' ')]
-
-    maps = []
-    for i, line in enumerate(data[2:]):
-        if line == '' or i == len(data) - 3: # if empty line or end
-            for j, seed in enumerate(seeds):
-                seeds[j] = update_seed(seed, maps)
-            maps.clear()
-            continue
-        elif not line[0].isdigit():
-            continue
-        maps.append([int(x) for x in line.split(' ')])
-
-    print(min(seeds))
+def get_input():
+    input_file = os.path.join(os.path.dirname(__file__), 'input/day-05-input.txt')
+    seeds, *blocks = open(input_file).read().split('\n\n')
+    seeds = list(map(int, seeds.split(':')[1].split()))
+    maps = [[list(map(int, line.split()))
+             for line in block.splitlines()[1:]]
+            for block in blocks]
+    return seeds, maps
 
 
-def update_seed(seed, maps):
-    for m in maps:
-        if m[1] <= seed <= m[1] + m[2] - 1:
-            return m[0] - m[1] + seed
-    return seed
-            
+def solve_1():
+    seeds, maps = get_input()
+    for map in maps:
+        for i, seed in enumerate(seeds):
+            for a, b, c in map:
+                if b <= seed < b + c:
+                   seeds[i] = seed - b + a
+    return min(seeds)
 
-import time
-startTime = time.time()
-solve_01()
-print('Time: ' + str(time.time() - startTime))
+
+def solve_2():
+    seeds, maps = get_input()
+    seeds = [
+        (seeds[i], seeds[i] + seeds[i + 1])
+        for i in range(0, len(seeds), 2)
+    ]
+    for map in maps:
+        for i, seed in enumerate(seeds):
+            start, end = seed
+            for a, b, c in map:
+                overlap_start = max(start, b)
+                overlap_end = min(end, b + c)
+                if overlap_start < overlap_end:
+                    seeds[i] = (overlap_start - b + a, overlap_end - b + a)
+                    if overlap_start > start:
+                        seeds.append((start, b))
+                    if overlap_end < end:
+                        seeds.append((b + c, end))
+                    break
+    return min(seeds)[0]
+
+
+if __name__ == '__main__':
+    import time
+    startTime = time.time()
+    print(solve_1())
+    print(solve_2())
+    print('Time: ' + str(time.time() - startTime))

@@ -1,5 +1,10 @@
 (ql:quickload :uiop)
 
+(defpackage 2023-day-1
+  (:use :cl))
+
+(in-package :2023-day-1)
+
 (defun get-input ()
   (uiop:read-file-lines "input/day-01-input.txt"))
 
@@ -9,7 +14,7 @@
   (let ((numbers (remove-if-not 'digit-char-p (map 'list #'identity str))))
     (parse-integer (concatenate 'string (list (first numbers) (first (last numbers)))))))
 
-(defun solve-01.1 ()
+(defun solve-1 ()
   (let ((data (get-input)))
     (loop for line in data
           sum (get-number line))))
@@ -38,7 +43,7 @@
 
 
 
-(defun solve-01.2 ()
+(defun solve-2 ()
   (let ((data (get-input)))
     (loop for line in data
           sum (first-last-digit line))))

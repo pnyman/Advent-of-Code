@@ -3,6 +3,10 @@
 (ql:quickload :serapeum)
 (ql:quickload :alexandria)
 
+(defpackage 2023-day-2
+  (:use :cl))
+
+(in-package :2023-day-2)
 
 (defun get-input ()
   (let ((games (make-hash-table)))
@@ -19,7 +23,7 @@
     games))
 
 
-(defun solve-01 ()
+(defun solve-1 ()
   (let ((games (get-input))
         (bag (serapeum:dict "red" 12 "green" 13 "blue" 14)))
     (loop for game-number being the hash-keys in games
@@ -30,7 +34,7 @@
           finally (return result))))
 
 
-(defun solve-02 ()
+(defun solve-2 ()
   (let ((games (get-input)))
     (loop for game-number being the hash-keys in games
           for bag = (serapeum:dict "red" 0 "green" 0 "blue" 0) do
