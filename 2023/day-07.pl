@@ -51,16 +51,13 @@ sub solve ($part) {
             $type = 6;
         }
         elsif (/4/) {    # four of a kind
-            $type = 5;
-            $type = 6 if $jokers;
+            $type = $jokers ? 6 : 5;
         }
         elsif ( /3/ && /2/ ) {    # full house
-            $type = 4;
-            $type = 6 if $jokers;
+            $type = $jokers ? 6 : 4;
         }
         elsif (/3/) {             # three of a kind
-            $type = 3;
-            $type = 5 if $jokers;
+            $type = $jokers ? 5 : 3;
         }
         elsif ( /2/g && /2/g ) {    # two pairs
             $type = 2;
@@ -68,8 +65,7 @@ sub solve ($part) {
             $type = 5 if $jokers == 2;
         }
         elsif (/2/) {               # one pair
-            $type = 1;
-            $type = 3 if $jokers;
+            $type = $jokers ? 3 : 1;
         }
         elsif ($jokers) {           # high card, but one joker
             $type = 1;
