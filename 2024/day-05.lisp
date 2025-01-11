@@ -14,18 +14,19 @@
   (setf *updates* nil)
   (let ((lines (uiop:read-file-lines "input/day-05-input.txt")))
     (loop for line in lines do
-      (cond ((search "|" line)
-             (destructuring-bind (k v) (str:split "|" line)
-               (let ((k (parse-integer k))
-                     (v (parse-integer v)))
-                 (if (gethash k *rules*)
-                     (setf (gethash k *rules*) (cons v (gethash k *rules*)))
-                     (setf (gethash k *rules*) (list v))))))
-            ((search "," line)
-             (push (mapcar (lambda (x) (parse-integer x))
-                           (str:split "," line))
-                   *updates*))
-            (t nil)))))
+      (when (search "|" line)
+        (destructuring-bind (k v) (str:split "|" line)
+          (let ((k (parse-integer k))
+                (v (parse-integer v)))
+            (if (gethash k *rules*)
+                (setf (gethash k *rules*) (cons v (gethash k *rules*)))
+                (setf (gethash k *rules*) (list v))))))
+      (when (search "," line)
+        (push (mapcar (lambda (x) (parse-integer x))
+                      (str:split "," line))
+              *updates*)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun correct-order-p (update)
   (if (null (rest update))
@@ -41,6 +42,8 @@
   (loop for update in *updates*
         when (correct-order-p update)
           sum (nth (floor (length update) 2) update)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun index-correct-first (update &optional (idx 0))
   (if (>= idx (length update))
