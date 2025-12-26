@@ -7,7 +7,7 @@
 
 (in-package :2025-day-1)
 
-(defparameter *input* "input/day-01-input.txt")
+(defparameter *input* "../input/day-01-test.txt")
 
 (defun parse-line (line)
   (->> line (remove #\R) (substitute #\- #\L) (parse-integer)))
@@ -19,13 +19,13 @@
 
 (defun part-1 ()                        ; 1135
   (loop with arrow = 50
-        for x in (get-input)
-        count (zerop (setf arrow (mod (+ arrow x) 100)))))
+        for value in (get-input)
+        count (zerop (setf arrow (mod (+ arrow value) 100)))))
 
 (defun part-1 ()                        ; 1135
   (loop with arrow = 50
-        for x in (get-input)
-        count (-<> (+ arrow x) (mod 100) (setf arrow <>) (zerop))))
+        for value in (get-input)
+        count (-<> (+ arrow value) (mod 100) (setf arrow <>) (zerop))))
 
 (defun part-1 ()
   (iter (with dial = 50)
@@ -44,7 +44,7 @@
 (defun part-2 ()                        ; 6558
   (loop with arrow = 50
         with clicks = 0
-        for x in (get-input)
-        do (incf clicks (passes arrow x))
-           (setf arrow (mod (+ arrow x) 100))
+        for value in (get-input)
+        do (incf clicks (passes arrow value))
+           (setf arrow (mod (+ arrow value) 100))
         finally (return clicks)))

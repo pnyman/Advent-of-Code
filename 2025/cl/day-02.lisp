@@ -8,7 +8,7 @@
 
 (in-package :2025-day-2)
 
-(defparameter *input* "input/day-02-input.txt")
+(defparameter *input* "../input/day-02-input.txt")
 
 (defun get-input ()
   (iter (for token in (str:split "," (uiop:read-file-line *input*)))
@@ -29,25 +29,14 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun unique-factors (num)
-  (iter (with acc = nil)
-        (with f = 1)
-        (while (> num 1))
-        (incf f)
-        (iter (while (zerop (mod num f)))
-              (pushnew f acc)
-              (setf num (/ num f)))
-        (finally (return acc))))
-
 (defun invalidp (num)
-  (iter (with s = (write-to-string num))
-        (with len = (length s))
-        (for f in (unique-factors len))
-        (iter (with step = (/ len f))
-              (for i from 0 below len by step)
-              (adjoining (subseq s i (+ i step)) into acc :test #'string=)
-              (finally (when (= 1 (length acc))
-                         (return-from invalidp t))))))
+  (iter (with len = (1+ (truncate (log num 10))))
+        (for f from 2 to len)
+        (when (zerop (mod len f))
+          (for pow = (expt 10 (/ len f)))
+          (for acc = (* (mod num pow) (/ (1- (expt pow f)) (1- pow))))
+          (when (= acc num)
+            (return-from invalidp t)))))
 
 (defun part-2 ()                        ; 31578210022
   (iter (with result = 0)
