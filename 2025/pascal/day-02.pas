@@ -29,14 +29,12 @@ begin
       while not eof(tfIn) do
          begin
             readln(tfIn, s);
-
             C := SplitString(s, ',');
             SetLength(A, Length(C));
-
             for i := Low(C) to High(C) do
                begin
-                  D := SplitString(C[i], '-');
                   SetLength(A[i], 2);
+                  D := SplitString(C[i], '-');
                   A[i][0] := StrToInt64(D[0]);
                   A[i][1] := StrToInt64(D[1]);
                end;
@@ -112,6 +110,7 @@ var
    i :  Integer;
    acc, num :  int64;
    A :  TInt2DArray;
+   D : Array of Int64;
 begin
    A := GetInput;
    acc := 0;

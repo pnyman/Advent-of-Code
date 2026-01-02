@@ -7,7 +7,7 @@
   (:use :cl :arrow-macros :iterate))
 (in-package :2025-day-6)
 
-(defparameter *input* "../input/day-06-input.txt")
+(defparameter *input* "../input/day-06-test.txt")
 
 (defun get-input ()
   (apply #'mapcar #'list

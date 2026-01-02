@@ -67,6 +67,7 @@ begin
          for j := k + 1 to High(arr[i]) do
             b := Max(b, arr[i][j]);
          sum := sum + (10 * a) + b;
+         writeln((10 * a) + b);
       end;
    writeln(sum);
 end;
