@@ -11,13 +11,12 @@
 ;;; part 1
 
 (defun get-number (str)
-  (let ((numbers (remove-if-not 'digit-char-p (map 'list #'identity str))))
-    (parse-integer (concatenate 'string (list (first numbers) (first (last numbers)))))))
+  (let ((numbers (remove-if-not 'digit-char-p (coerce str 'list))))
+    (parse-integer (format nil "~a~a" (first numbers) (first (last numbers))))))
 
 (defun solve-1 ()
-  (let ((data (get-input)))
-    (loop for line in data
-          sum (get-number line))))
+  (loop for line in (get-input)
+        sum (get-number line)))
 
 ;;; part 2
 
@@ -25,26 +24,17 @@
   (loop for number from 1 to 9
         collect (cons (format nil "~r" number) (write-to-string number))))
 
-(defun cardinal->int (cardinal)
-  (cdr (assoc cardinal *cardinal-number-map* :test #'string-equal)))
-
 (defun maybe-number (x)
-  (or (cardinal->int x)
+  (or (cdr (assoc x *cardinal-number-map* :test #'string-equal))
       (when (every #'digit-char-p x) x)))
 
-(defun first-last-digit (s)
-  (let ((acc (remove nil (loop for i below (length s)
-                               append (loop for j from (1+ i) to (length s) 
-                                            collect (maybe-number (subseq s i j)))))))
-    (parse-integer
-     (concatenate 'string
-                  (subseq (nth 0 acc) 0 1)
-                  (subseq (nth (1- (length acc)) acc) 0 1)))))
-
-
+(defun first-last-digits (line)
+  (let ((acc (loop for i below (length line)
+                   append (loop for j from (1+ i) to (length line)
+                                for num = (maybe-number (subseq line i j))
+                                when num collect num))))
+    (parse-integer (format nil "~a~a" (first acc) (first (last acc))))))
 
 (defun solve-2 ()
-  (let ((data (get-input)))
-    (loop for line in data
-          sum (first-last-digit line))))
-
+  (loop for line in (get-input)
+        sum (first-last-digits line)))

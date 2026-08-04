@@ -33,12 +33,10 @@
 
 (defun get-gears (data)
   "Find the coordinates for all gears (stars)."
-  (let ((gears nil))
-    (loop for r below (length data) do
-      (loop for c below (length (nth 0 data)) do
-        (when (char= #\* (nth c (nth r data)))
-          (push (list r c) gears))))
-    gears))
+  (loop for r below (length data)
+        append (loop for c below (length (nth 0 data))
+                     when (char= #\* (nth c (nth r data)))
+                       collect (list r c))))
 
 
 (defun make-deltas (coords)
@@ -66,12 +64,11 @@
 
 (defun adjacent-numbers (gear numbers)
   "Check if there is exactly 2 numbers adjacent to the gear."
-  (let ((hits nil))
-    (loop for number in numbers do
-      (loop for delta in (make-deltas gear)
-            when (member delta (second number) :test 'equal)
-              do (push (first number) hits)))
-    (setf hits (remove-duplicates hits))
+  (let ((hits (remove-duplicates
+               (loop for number in numbers
+                     append (loop for delta in (make-deltas gear)
+                                  when (member delta (second number) :test 'equal)
+                                    collect (first number))))))
     (when (= 2 (length hits)) hits)))
 
 
@@ -79,8 +76,7 @@
   (let ((data (get-input)))
     (loop for number in (get-number-coords data)
           when (adjacent-symbol-p data (second number))
-            sum (first number) into result
-          finally (return result))))
+            sum (first number))))
 
 
 (defun solve-2 ()
@@ -90,5 +86,4 @@
     (loop for gear in gears
           for adjacent = (adjacent-numbers gear numbers)
           when adjacent
-            sum (reduce #'* adjacent) into result
-          finally (return result))))
+            sum (reduce #'* adjacent))))

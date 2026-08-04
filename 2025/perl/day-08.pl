@@ -4,7 +4,7 @@ use List::Util qw(sum);
 use Graph::Undirected;
 use Data::Dump;
 
-my $input = '../input/day-08-input.txt';
+my $input = '../input/day-08-test.txt';
 
 sub get_input {
     map [ split /,/ ], path($input)->lines( { chomp => 1 } );
@@ -60,6 +60,7 @@ sub part_2 ( $edges, $nr_nodes ) {
 }
 
 my @nodes = get_input;
+dd @nodes;
 my $edges = make_edges(@nodes);
 say part_1 $edges;                   # 62186
 say part_2 $edges, scalar @nodes;    # 8420405530

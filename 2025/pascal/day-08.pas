@@ -2,7 +2,7 @@ Program day_08;
 {$mode objfpc}{$H+}{$J-}{$R+}{$M+}
 
 Uses
-SysUtils, StrUtils, Math, Types;
+SysUtils, StrUtils;
 
 const
    INPUT = '../input/day-08-test.txt';
@@ -32,7 +32,7 @@ function GetInput: TPointArray;
 var
    tfIn: textFile;
    s: String;
-   parts: TStringDynArray;
+   parts: Array of String;
    A: TPointArray;
    P: TPoint3D;
    n: Integer;
@@ -129,6 +129,6 @@ var
    D: PDistance;
 begin
    Dists := MakeEdges(GetInput);
-   for D in Dists do
-      DistanceDump(D);
+   { for D in Dists do }
+      { DistanceDump(D); }
 end.
