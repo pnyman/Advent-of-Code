@@ -41,7 +41,7 @@
     (loop for perm in (permutations places)
           for dist = (reduce #'+ (mapcar (lambda (x y)
                                            (get-distance ht x y))
-                                         (butlast perm) (cdr perm)))
+                                         (butlast perm) (rest perm)))
           minimize dist into min-dist
           maximize dist into max-dist
           finally (return (cons min-dist max-dist)))))
