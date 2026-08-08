@@ -12,7 +12,7 @@
   (uiop:read-file-lines "input/day-06.txt"))
 
 (defun parse-line (line)
-  (let ((line (str:split " " line))
+  (let ((line (str:words line))
         (start-x) (start-y)
         (stop-x) (stop-y))
     (when (> (length line) 4) (setf line (cdr line)))

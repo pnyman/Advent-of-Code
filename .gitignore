@@ -1,6 +1,7 @@
 *#
 /2021/TAGS
+jpm_tree/
 *.o
 *.exe
 *.ali
-jpm_tree/
+*.fasl

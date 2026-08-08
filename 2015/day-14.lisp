@@ -17,7 +17,7 @@
 
 (defun parse-input (input)
   (loop for line in input
-        for data = (str:split " " line)
+        for data = (str:words line)
         collect (list :name (read-from-string (nth 0 data))
                       :speed (parse-integer (nth 3 data))
                       :flight (parse-integer (nth 6 data))

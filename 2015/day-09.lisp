@@ -33,7 +33,7 @@
   (let ((ht (make-hash-table :test #'equal))
         (places nil))
     (loop for line in input
-          for (start to destination eq distance) = (str:split " " line)
+          for (start to destination eq distance) = (str:words line)
           do (pushnew start places :test #'string=)
              (pushnew destination places :test #'string=)
              (add-distance ht start destination distance)

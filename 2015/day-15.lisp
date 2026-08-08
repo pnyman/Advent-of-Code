@@ -17,7 +17,7 @@
 
 (defun parse-input (input)
   (loop for line in input
-        for s = (str:split " " line)
+        for s = (str:words line)
         collect
         (loop for i from 2 to 10 by 2
               collect (-<> (nth i s)

@@ -16,7 +16,7 @@
 
 (defun parse-line (line)
   (let* ((line (str:split " -> " line))
-         (ops (str:split " " (car line)))
+         (ops (str:words (car line)))
          (ops-len (length ops))
          (wire (cadr line)))
     (list :op (cond ((= ops-len 3) (get-op (read-from-string (second ops))))

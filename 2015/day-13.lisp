@@ -18,7 +18,7 @@
 
 (defun parse-input (input)
   (loop for line in input
-        for data = (str:split " " line)
+        for data = (str:words line)
         for happiness = (parse-integer (nth 3 data))
         collect (list :person (read-from-string (nth 0 data))
                       :neighbour (read-from-string (remove #\. (nth 10 data)))
