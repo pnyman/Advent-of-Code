@@ -20,8 +20,7 @@
 
 (defun has-twice-in-a-row-p (s)
   (loop for i from 0 to (- (length s) 2)
-          thereis (string= (subseq s i (1+ i))
-                           (subseq s (1+ i) (+ i 2)))))
+          thereis (eq (char s i) (char s (1+ i)))))
 
 (defun no-forbidden-strings-p (s)
   (loop for x in '("ab" "cd" "pq" "xy")

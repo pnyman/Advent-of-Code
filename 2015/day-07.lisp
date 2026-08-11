@@ -55,9 +55,10 @@
                                (op (getf instr :op))
                                (arg1 (getf instr :arg1))
                                (arg2 (getf instr :arg2))
-                               (val (cond ((and op arg2) (funcall op (resolve arg1) (resolve arg2)))
-                                          (op (funcall op (resolve arg1)))
-                                          (t (resolve arg1)))))
+                               (val (cond ((and op arg2) ; two arguments
+                                           (funcall op (resolve arg1) (resolve arg2)))
+                                          (op (funcall op (resolve arg1))) ; not
+                                          (t (resolve arg1)))))            ; assign
                           (setf (gethash wire-or-val resolved) val)
                           val)))))
       (resolve 'a))))

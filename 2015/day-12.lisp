@@ -15,7 +15,7 @@
 ;;; part 1
 
 (defun get-input ()
-  (uiop:read-file-line "input/day-12.txt"))
+  (uiop:read-file-line "input/day-12.json"))
 
 (defun to-int (nums)
   (reduce (lambda (acc c) (+ (* acc 10) (digit-char-p c)))
@@ -39,7 +39,7 @@
               (t (setf sign 1) (incf i))))
     sum))
 
-;; could have used
+;; could have used json:
 (defun sum-numbers (obj)
   (cond ((numberp obj) obj)
         ((stringp obj) 0)

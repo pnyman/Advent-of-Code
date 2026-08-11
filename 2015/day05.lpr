@@ -2,8 +2,7 @@ program day05;
 {$mode ObjFPC}{$H+}
 
 uses
-  SysUtils,
-  MD5;
+  SysUtils;
 
 const
   input = 'input/day-05.txt';
@@ -24,7 +23,7 @@ const
   var
     i: integer;
   begin
-    for i := 1 to length(line) - 1 do
+    for i := 1 to line.length - 1 do
       if line[i] = line[i + 1] then
         exit(True);
     Result := False;
@@ -46,7 +45,7 @@ const
     i: integer;
     head, rest: string;
   begin
-    for i := 0 to length(line) - 4 do
+    for i := 0 to line.length - 4 do
     begin
       head := line.substring(i, 2);
       rest := line.substring(i + 2);
@@ -60,7 +59,7 @@ const
   var
     i: integer;
   begin
-    for i := 1 to length(line) - 2 do
+    for i := 1 to line.length - 2 do
       if line[i] = line[i + 2] then
         exit(True);
     Result := False;

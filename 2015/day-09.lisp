@@ -16,8 +16,8 @@
         for other-items = (remove item items)
         for other-items-permutations = (permutations other-items)
         append (if other-items-permutations
-                   (mapcar #'(lambda (l)
-                               (cons item l))
+                   (mapcar (lambda (l)
+                             (cons item l))
                            other-items-permutations)
                    (list (list item)))))
 
