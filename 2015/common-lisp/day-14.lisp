@@ -4,16 +4,15 @@
 (use-package :arrow-macros)
 
 (defpackage AoC-2015-14
-  (:use :cl)
-  (:use :arrow-macros))
+  (:use :cl))
 
 (in-package :AoC-2015-14)
 
 (defun get-input ()
-  (uiop:read-file-lines "input/day-14.txt"))
+  (uiop:read-file-lines "../input/day-14.txt"))
 
 (defun get-test-input ()
-  (uiop:read-file-lines "input/day-14-test.txt"))
+  (uiop:read-file-lines "../input/day-14-test.txt"))
 
 (defun parse-input (input)
   (loop for line in input
@@ -62,7 +61,4 @@
       (dolist (reindeer data)
         (advance reindeer time))
       (award-point data))
-    (-> data
-        (sort #'> :key (lambda (x) (getf x :points)))
-        first
-        (getf :points))))
+    (reduce #'max data :key (lambda (x) (getf x :points)))))

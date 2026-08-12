@@ -11,10 +11,10 @@
 ;;; part 1
 
 (defun get-input ()
-  (uiop:read-file-lines "input/day-13.txt"))
+  (uiop:read-file-lines "../input/day-13.txt"))
 
 (defun get-test-input ()
-  (uiop:read-file-lines "input/day-13-test.txt"))
+  (uiop:read-file-lines "../input/day-13-test.txt"))
 
 (defun parse-input (input)
   (loop for line in input
@@ -74,5 +74,4 @@
                     for p2 = (nth (mod (1+ i) len) perm)
                     sum (+ (get-happiness ht p1 p2)
                            (get-happiness ht p2 p1)))
-          maximize happiness into max-happiness
-          finally (return max-happiness))))
+          maximize happiness)))
