@@ -1,4 +1,4 @@
-program day03;
+program day02;
 {$mode ObjFPC}{$H+}
 uses
   SysUtils,
@@ -18,7 +18,7 @@ var
   a, b, c, l, w, h, m: integer;
 
 begin
-  AssignFile(F, 'input/day-02.txt');
+  AssignFile(F, '../input/day-02.txt');
   Reset(F);
   while not EOF(F) do
   begin

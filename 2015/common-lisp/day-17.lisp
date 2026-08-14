@@ -1,7 +1,4 @@
 (ql:quickload :uiop)
-(ql:quickload :str)
-(ql:quickload :arrow-macros)
-(use-package :arrow-macros)
 
 (defpackage AoC-2015-17
   (:use :cl))
@@ -10,7 +7,7 @@
 
 (defun get-input ()
   (mapcar #'parse-integer
-          (uiop:read-file-lines "input/day-17.txt")))
+          (uiop:read-file-lines "../input/day-17.txt")))
 
 (defun combinations (containers target &optional (count 0))
   (cond
@@ -24,6 +21,5 @@
   (length (combinations containers target)))
 
 (defun solve-2 (containers &optional (target 150))
-  (let* ((results (combinations containers target))
-         (min-count (reduce #'min results)))
-    (count min-count results)))
+  (let* ((results (combinations containers target)))
+    (count (reduce #'min results) results)))

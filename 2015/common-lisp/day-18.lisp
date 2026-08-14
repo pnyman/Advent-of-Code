@@ -21,7 +21,7 @@
 (defparameter *cols* 0)
 
 (defun get-input ()
-  (let* ((data (uiop:read-file-lines "input/day-18.txt")))
+  (let* ((data (uiop:read-file-lines "../input/day-18.txt")))
     (setf *rows* (length data))
     (setf *cols* (length (first data)))
     ;; make a ring around the actual data
@@ -39,7 +39,7 @@
 (defun count-neighbours (grid row col)
   (declare (type (simple-array boolean (* *)) grid)
            (type fixnum row col))
-  (loop for i from 0 below 8
+  (loop for i below 8
         for r fixnum = (+ row (aref *deltas* i 0))
         for c fixnum = (+ col (aref *deltas* i 1))
         when (aref grid r c)            ; range check not needed
@@ -77,10 +77,10 @@
       (let ((new-grid (make-array (list (+ *rows* 2) (+ *cols* 2))
                                   :element-type 'boolean
                                   :initial-element nil)))
-        (loop for r below *rows* do
-          (loop for c below *cols* do
-            (setf (aref new-grid (1+ r) (1+ c))
-                  (maybe-toggle-light grid (1+ r) (1+ c)))))
+        (loop for r from 1 to *rows* do
+          (loop for c from 1 to *cols* do
+            (setf (aref new-grid r c)
+                  (maybe-toggle-light grid r c))))
         (setf grid new-grid)
         (when part-2 (light-corners grid))))
     (count-lighted grid)))

@@ -11,7 +11,7 @@ var
   found: boolean = False;
 
 begin
-  Assign(F, 'input/day-01.txt');
+  Assign(F, '../input/day-01.txt');
   Reset(F);
   while not EOF(F) do
   begin

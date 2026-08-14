@@ -24,7 +24,8 @@
   (uiop:read-file-lines "input/day-19.txt"))
 
 (defun parse-input (input)
-  (let ((rules)   (molecule))
+  (let ((rules)
+        (molecule))
     (loop for line in input do
       (cond ((str:emptyp line) nil)
             ((search "=>" line)
@@ -33,7 +34,7 @@
             (t (setf molecule line))))
     (list rules molecule)))
 
-;;; patr 1
+;;; part 1
 
 (defun generate (str old new)
   (loop for start = 0 then (1+ m)
