@@ -38,3 +38,4 @@ begin
   Close(F);
   WriteLn(format('Part 1: %d, part 2: %d', [sum1, sum2]));
 end.
+// Part 1: 1606483, part 2: 3842356

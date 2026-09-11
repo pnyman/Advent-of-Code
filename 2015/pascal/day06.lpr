@@ -7,7 +7,7 @@ uses
   RegExpr;
 
 const
-  input = 'input/day-06.txt';
+  input = '../input/day-06.txt';
 
 type
   TInstruction = record
@@ -29,12 +29,12 @@ type
     parts := line.split(' ');
     if length(parts) > 4 then Delete(parts, 0, 1);
     Result.action := parts[0];
-    subparts     := parts[1].split(',');
+    subparts      := parts[1].split(',');
     Result.startx := StrToInt(subparts[0]);
     Result.starty := StrToInt(subparts[1]);
-    subparts     := parts[3].split(',');
-    Result.stopx := StrToInt(subparts[0]);
-    Result.stopy := StrToInt(subparts[1]);
+    subparts      := parts[3].split(',');
+    Result.stopx  := StrToInt(subparts[0]);
+    Result.stopy  := StrToInt(subparts[1]);
   end;
 
   function ParseLine(const line: string): TInstruction;
@@ -58,14 +58,14 @@ type
   end;
 
 var
-  F:     Text;
-  line:  string;
-  x, y:  integer;
+  F:      Text;
+  line:   string;
+  x, y:   integer;
   alight: integer = 0;
   brightness: integer = 0;
   instruction: TInstruction;
-  grid1: TBoolArray = nil;
-  grid2: TIntArray = nil;
+  grid1:  TBoolArray = nil;
+  grid2:  TIntArray = nil;
 
 begin
   SetLength(grid1, 1000, 1000);

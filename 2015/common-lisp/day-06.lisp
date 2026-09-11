@@ -9,7 +9,7 @@
 (in-package :AoC-2015-06)
 
 (defun get-input ()
-  (uiop:read-file-lines "input/day-06.txt"))
+  (uiop:read-file-lines "../input/day-06.txt"))
 
 (defun parse-line (line)
   (let ((line (str:words line))

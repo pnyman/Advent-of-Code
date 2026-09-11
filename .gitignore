@@ -5,3 +5,4 @@ jpm_tree/
 *.exe
 *.ali
 *.fasl
+*.beam

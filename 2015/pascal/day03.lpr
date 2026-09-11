@@ -6,7 +6,7 @@ uses
   Generics.Collections;
 
 const
-  InputFile = 'input/day-03.txt';
+  InputFile = '../input/day-03.txt';
 
 type
   THouse = record
@@ -78,7 +78,9 @@ begin
     Close(input);
   end;
 
-  WriteLn(format('Part 1: %d, part 2: %d',
-    [CountHouses(houses),
-    CountHouses(Concat(santa, robo))]));
+  WriteLn(format('Part 1: %d',
+    [CountHouses(houses)]));
+
+  WriteLn(format('Part 2: %d',
+    [CountHouses(Concat(santa, robo))]));
 end.
