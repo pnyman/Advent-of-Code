@@ -6,3 +6,4 @@ jpm_tree/
 *.ali
 *.fasl
 *.beam
+*.obj
