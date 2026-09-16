@@ -12,51 +12,45 @@
   (uiop:read-file-lines "../input/day-06.txt"))
 
 (defun parse-line (line)
-  (let ((line (str:words line))
-        (start-x) (start-y)
-        (stop-x) (stop-y))
-    (when (> (length line) 4) (setf line (cdr line)))
-    (destructuring-bind (x y) (str:split "," (second line))
-      (setf start-x (parse-integer x)) (setf start-y (parse-integer y)))
-    (destructuring-bind (x y) (str:split "," (fourth line))
-      (setf stop-x (parse-integer x)) (setf stop-y (parse-integer y)))
-    (list :action (read-from-string (car line))
-          :start-x start-x :start-y start-y
-          :stop-x stop-x :stop-y stop-y)))
+  (let* ((line (reverse (str:words line)))
+         (start (str:split "," (third line)))
+         (stop (str:split "," (first line))))
+    (list (read-from-string (fourth line))
+          (parse-integer (first start)) (parse-integer (second start))
+          (parse-integer (first stop)) (parse-integer (second stop)))))
+
+(defun parse-line (line)
+  (let* ((line (reverse (str:words line)))
+         (start (str:split "," (third line)))
+         (stop (str:split "," (first line))))
+    (append (list (read-from-string (fourth line)))
+            (mapcar #'parse-integer
+                    (list (first start) (second start)
+                          (first stop) (second stop))))))
 
 (defun solve-1 (input)
-  (let ((lights (make-array '(1000 1000) :element-type 'boolean :initial-element nil))
-        (lit 0))
+  (let ((lights (make-array '(1000 1000) :element-type 'boolean :initial-element nil)))
     (loop for line in input
-          for foo = (parse-line line)
-          for action = (getf foo :action) do
-            (loop for x from (getf foo :start-x) to (getf foo :stop-x) do
-              (loop for y from (getf foo :start-y) to (getf foo :stop-y) do
+          for (action x1 y1 x2 y2) = (parse-line line) do
+            (loop for x from x1 to x2 do
+              (loop for y from y1 to y2 do
                 (setf (aref lights x y)
                       (cond ((eq action 'on)  t)
                             ((eq action 'off) nil)
                             (t (not (aref lights x y))))))))
-
-    (loop for x from 0 to 999 do
-      (loop for y from 0 to 999
-            when (aref lights x y)
-              do (incf lit)))
-    lit))
+    (loop for x from 0 to 999
+          sum (loop for y from 0 to 999
+                    when (aref lights x y) sum 1))))
 
 (defun solve-2 (input)
-  (let ((lights (make-array '(1000 1000) :element-type 'integer :initial-element 0))
-        (brightness 0))
+  (let ((lights (make-array '(1000 1000) :element-type 'integer :initial-element 0)))
     (loop for line in input
-          for foo = (parse-line line)
-          for action = (getf foo :action) do
-            (loop for x from (getf foo :start-x) to (getf foo :stop-x) do
-              (loop for y from (getf foo :start-y) to (getf foo :stop-y) do
+          for (action x1 y1 x2 y2) = (parse-line line) do
+            (loop for x from x1 to x2 do
+              (loop for y from y1 to y2 do
                 (setf (aref lights x y)
                       (cond ((eq action 'on) (1+ (aref lights x y)))
-                            ((eq action 'off) (max (1- (aref lights x y)) 0))
+                            ((eq action  'off) (max (1- (aref lights x y)) 0))
                             (t (+ (aref lights x y) 2)))))))
-
-    (loop for x from 0 to 999 do
-      (loop for y from 0 to 999
-            do (incf brightness (aref lights x y))))
-    brightness))
+    (loop for x from 0 to 999
+          sum (loop for y from 0 to 999 sum (aref lights x y)))))

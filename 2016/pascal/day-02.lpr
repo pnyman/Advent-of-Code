@@ -1,9 +1,7 @@
 program day02;
 {$mode ObjFPC}{$H+}
 uses
-  SysUtils,
-  Math,
-  Generics.Collections;
+  SysUtils;
 
 const
   input = '../input/day-02.txt';
@@ -36,14 +34,12 @@ const
     begin
       ReadLn(F, line);
       for ch in line do
-      begin
         case ch of
           'R': if col < 3 then Inc(col);
           'L': if col > 1 then Dec(col);
           'D': if row < 3 then Inc(row);
           'U': if row > 1 then Dec(row);
         end;
-      end;
       result += keypad[row][col];
     end;
 
@@ -55,12 +51,10 @@ const
     F:    TextFile;
     line: string;
     ch:   char;
-    row, col: integer;
+    row:  integer = 3;
+    col:  integer = 1;
   begin
     result := '';
-    row    := 3;
-    col    := 1;
-
     AssignFile(F, input);
     Reset(F);
 
@@ -68,7 +62,6 @@ const
     begin
       ReadLn(F, line);
       for ch in line do
-      begin
         case ch of
           'R': if (col < 5) and not
               keypad2[row][succ(col)].IsEmpty then
@@ -83,7 +76,6 @@ const
               keypad2[pred(row)][col].IsEmpty then
               Dec(row);
         end;
-      end;
       result += keypad2[row][col];
     end;
 

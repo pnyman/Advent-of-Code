@@ -1,0 +1,37 @@
+(ql:quickload :uiop)
+(ql:quickload :str)
+(ql:quickload :md5)
+(ql:quickload :arrow-macros)
+(use-package :arrow-macros)
+
+(defpackage AoC-2016-06
+  (:use :cl)
+  (:use :arrow-macros))
+
+(in-package :AoC-2016-06)
+
+(defun get-input ()
+  (->> "../input/day-06.txt"
+    (uiop:read-file-lines)
+    (mapcar (lambda (x) (coerce x 'list)))))
+
+(defun solve (input)
+  (let ((freq (make-array '(8 26)))
+        (x 0) (y 0) (mes-1 nil) (mes-2 nil))
+    (dolist (line input)
+      (dotimes (i 8)
+        (incf (aref freq i (- (char-code (nth i line)) 97)))))
+    (dotimes (i 8)
+      (let ((max 0) (min most-positive-fixnum))
+        (dotimes (c 26)
+          (let ((f (aref freq i c)))
+            (when (> f max)
+              (setf max f)
+              (setf x c))
+            (when (< 0 f min)
+              (setf min f)
+              (setf y c)))))
+      (push (code-char (+ x 97)) mes-1)
+      (push (code-char (+ y 97)) mes-2))
+    (format t "Part 1: ~A~%" (coerce (reverse mes-1) 'string))
+    (format t "Part 2: ~A~%" (coerce (reverse mes-2) 'string))))

@@ -1,4 +1,4 @@
--module(foo).
+-module(day_06_alt).
 -export([main/0]).
 
 main() ->
